@@ -9,66 +9,43 @@ contract Voting is Ownable {
         uint voteCount;
     }
 
-    struct Vote {
-        string name;
-        Option[] options;
-        mapping(string => uint) optionIndex; // Mappe un nom d'option à son index
+    string public voteName;
+    Option[] public options;
+    mapping(string => uint) private optionIndex;
+
+    event OptionAdded(string optionName);
+    event VoteCast(string optionName);
+
+    constructor(string memory _voteName, address initialOwner) Ownable(initialOwner) {
+        voteName = _voteName;
     }
 
-    constructor() Ownable(msg.sender) {
+
+    function addOption(string memory _optionName) public onlyOwner {
+        require(optionIndex[_optionName] == 0, "Option already exists");
+
+        options.push(Option(_optionName, 0));
+        optionIndex[_optionName] = options.length;
+
+        emit OptionAdded(_optionName);
     }
 
-
-    Vote[] public votes;
-
-    event VoteCreated(string voteName);
-    event OptionAdded(string voteName, string optionName);
-
-    // Crée un nouveau vote
-    function createVote(string memory _voteName) public onlyOwner {
-        votes.push();
-        Vote storage v = votes[votes.length - 1];
-        v.name = _voteName;
-        emit VoteCreated(_voteName);
-    }
-
-    // Ajoute une option à un vote existant
-    function addOption(string memory _voteName, string memory _optionName) public onlyOwner {
-        uint index = findVoteIndex(_voteName);
-        require(index != type(uint).max, "Vote not found");
+    function castVote(string memory _optionName) public onlyOwner {
+        uint index = optionIndex[_optionName];
+        require(index != 0, "Option does not exist");
         
-        Vote storage v = votes[index];
-        require(v.optionIndex[_optionName] == 0, "Option already exists");
-        
-        v.options.push(Option(_optionName, 0));
-        v.optionIndex[_optionName] = v.options.length;
-        emit OptionAdded(_voteName, _optionName);
+        options[index - 1].voteCount += 1;
+
+        emit VoteCast(_optionName);
     }
 
-    // Trouve l'index d'un vote par son nom
-    function findVoteIndex(string memory _voteName) internal view returns (uint) {
-        for (uint i = 0; i < votes.length; i++) {
-            if (keccak256(bytes(votes[i].name)) == keccak256(bytes(_voteName))) {
-                return i;
-            }
-        }
-        return type(uint).max;
-    }
+    function getOptions() public view returns (string[] memory names, uint[] memory voteCounts) {
+        names = new string[](options.length);
+        voteCounts = new uint[](options.length);
 
-    // Nouvelle fonction pour obtenir les détails d'un vote
-    function getVoteDetails(uint index) public view returns (string memory name, string[] memory optionNames, uint[] memory voteCounts) {
-        require(index < votes.length, "Vote not found");
-
-        Vote storage vote = votes[index];
-        name = vote.name;
-
-        optionNames = new string[](vote.options.length);
-        voteCounts = new uint[](vote.options.length);
-
-        for (uint i = 0; i < vote.options.length; i++) {
-            Option storage option = vote.options[i];
-            optionNames[i] = option.name;
-            voteCounts[i] = option.voteCount;
+        for (uint i = 0; i < options.length; i++) {
+            names[i] = options[i].name;
+            voteCounts[i] = options[i].voteCount;
         }
     }
 }
