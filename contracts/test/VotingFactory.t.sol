@@ -27,3 +27,4 @@ contract VotingFactoryTest is Test {
     // Event placeholder, assurez-vous que l'ordre des paramètres correspond à celui émis par votre contrat
     event VotingCreated(address indexed votingAddress, uint chainId, string voteName, address indexed owner);
 }
+
