@@ -1,0 +1,84 @@
+.vote-list-page {
+    text-align: center;
+    background-image: url('/public/vote.jpeg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding-top: 100px; 
+  }
+  
+  .account-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+  }
+  
+  .walletAddress {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .button-add-vote {
+    background-color: #004a99;
+    color: #FFFFFF;
+    border: none;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 2px; 
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .button-add-vote:hover {
+    background-color: #003366;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  }
+  
+  .vote-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0; 
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px; 
+    width: 300px; 
+  }
+  
+  .vote-form input, .vote-form button {
+    width: 100%; 
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px 0; 
+  }
+  
+  .votes-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; 
+    width: 100%; 
+  }
+  
+  .vote-item {
+    background-color: #ADD8E6; 
+    padding: 15px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    width: 80%; 
+    text-align: left; 
+  }
+  
