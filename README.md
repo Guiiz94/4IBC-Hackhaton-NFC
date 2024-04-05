@@ -6,7 +6,7 @@
 - [Architecture du Système](#architecture-du-système)
 - [Composants du Système](#composants-du-système)
   - [Frontend ReactJS](#frontend-reactjs)
-  - [Smart Contracts Solidity](#smart-contracts-solidity)
+  - [Contrats Intelligents Solidity](#contrats-intelligents-solidity)
   - [Cartes NFC](#cartes-nfc)
 - [Processus de Vote](#processus-de-vote)
 - [Sécurité](#sécurité)
@@ -17,36 +17,32 @@
 
 ## Introduction
 
-Ce document présente la conception technique d'un système de vote basé sur la blockchain, destiné à être utilisé pour des élections et d'autres formes de vote. Ce système vise à offrir une méthode de vote transparente, sécurisée et facilement vérifiable. Il utilise ReactJS pour le frontend, Solidity pour les smart contracts sur la blockchain Ethereum, et des cartes NFC pour l'authentification des électeurs.
+Ce document présente la conception technique d'un système de vote basé sur la blockchain, destiné à être utilisé pour des élections et d'autres formes de vote. Ce système vise à offrir une méthode de vote transparente, sécurisée et facilement vérifiable, en combinant ReactJS, Solidity et la technologie NFC.
 
 ## Architecture du Système
 
-L'architecture du système de vote se compose de trois principaux composants : le frontend développé en ReactJS, les smart contracts écrits en Solidity, et l'utilisation de cartes NFC pour la validation des votes.
-
-- **Frontend (ReactJS)** : Interface utilisateur pour les électeurs, permettant de soumettre leur vote de manière sécurisée.
-- **Smart Contracts (Solidity)** : Logique métier du système de vote, implémentée sur la blockchain Ethereum pour garantir la transparence et l'immuabilité des votes.
-- **Cartes NFC** : Utilisées pour authentifier l'identité des électeurs avant de soumettre leur vote.
+Le système de vote repose sur trois principaux composants : le frontend développé en ReactJS, les contrats intelligents écrits en Solidity pour la blockchain Ethereum, et l'utilisation de cartes NFC pour l'authentification des électeurs.
 
 ## Composants du Système
 
 ### Frontend ReactJS
 
-Le frontend est développé avec ReactJS, fournissant une interface utilisateur réactive et interactive pour les électeurs. Il interagit avec les smart contracts sur la blockchain pour soumettre les votes.
+Le frontend est développé avec ReactJS, fournissant une interface utilisateur réactive et interactive pour les électeurs. Il interagit avec les contrats intelligents sur la blockchain pour soumettre les votes.
 
 #### Fonctionnalités Clés
 
 - **Authentification** : Les électeurs s'authentifient via leur carte NFC, lue par un appareil compatible.
 - **Interface de Vote** : Une fois authentifiés, les électeurs sont dirigés vers l'interface de vote où ils peuvent choisir leur candidat ou option de vote.
-- **Soumission du Vote** : Après sélection, le vote est envoyé au smart contract sur la blockchain via Metamask ou un portefeuille Ethereum similaire.
+- **Soumission du Vote** : À chaque nouveau vote, un nouveau contrat est déployé sur la blockchain Ethereum.
 
-### Smart Contracts Solidity
+### Contrats Intelligents Solidity
 
-Les smart contracts sont au cœur du système de vote, assurant la logique de vote et la gestion des données de manière sécurisée et transparente.
+Les contrats intelligents sont au cœur du système de vote, assurant la logique de vote et la gestion des données de manière sécurisée et transparente.
 
 #### Fonctionnalités Clés
 
-- **Contrat de Vote** : Gère la logique de soumission des votes, l'enregistrement des candidats, et assure que chaque électeur vote une seule fois.
-- **Wallet Administrateur** : Appartenant à l'État ou à l'organisme de gestion des élections, ce portefeuille couvre les frais de transaction pour les opérations de vote, garantissant que le coût ne soit pas un obstacle pour les électeurs.
+- **Contrat de Vote** : Gère la logique de soumission des votes, l'enregistrement des candidats, et assure que chaque électeur vote une seule fois. Un nouveau contrat est déployé à chaque nouveau vote pour garantir l'intégrité du processus.
+- **Portefeuille Administrateur** : Appartenant à l'État ou à l'organisme de gestion des élections, ce portefeuille couvre les frais de transaction pour les opérations de vote, garantissant que le coût ne soit pas un obstacle pour les électeurs.
 
 ### Cartes NFC
 
@@ -61,19 +57,21 @@ Les cartes NFC servent à authentifier les électeurs. Chaque carte contient un 
 
 1. **Authentification** : L'électeur s'authentifie via la carte NFC.
 2. **Sélection du Vote** : L'électeur choisit son option de vote sur l'interface ReactJS.
-3. **Soumission et Validation** : Le vote est soumis au smart contract pour validation et enregistrement sur la blockchain.
+3. **Soumission et Validation** : Le vote est soumis au contrat intelligent pour validation et enregistrement sur la blockchain.
 4. **Confirmation** : L'électeur reçoit une confirmation de son vote.
 
 ## Sécurité
 
-- **Smart Contracts** : Audités pour prévenir les vulnérabilités et garantir la fiabilité.
+- **Contrats Intelligents** : Audités pour prévenir les vulnérabilités et garantir la fiabilité. Un nouveau contrat est déployé à chaque nouveau vote pour minimiser les risques.
 - **Cartes NFC** : Cryptage robuste pour protéger l'identité et les données des électeurs.
 - **Blockchain** : Utilisation de la blockchain Ethereum pour l'immuabilité et la transparence des votes.
 
 ## Déploiement
 
-Le système nécessite le déploiement des smart contracts sur la blockchain Ethereum et l'hébergement du frontend ReactJS sur un serveur web sécurisé. Les cartes NFC doivent être distribuées aux électeurs avec des instructions claires sur leur utilisation.
+Le système nécessite le déploiement des contrats intelligents sur la blockchain Ethereum et l'hébergement du frontend ReactJS sur un serveur web sécurisé. Les cartes NFC doivent être distribuées aux électeurs avec des instructions claires sur leur utilisation.
 
 ## Conclusion
 
 Ce système de vote blockchain offre une solution sécurisée, transparente et accessible pour la conduite d'élections et d'autres formes de vote. En combinant ReactJS, Solidity, et la technologie NFC, il fournit une méthode de vote moderne qui peut renforcer la confiance dans le processus électoral.
+
+<img width="2399" alt="Hackathon" src="https://github.com/Guiiz94/4IBC-Hackhaton-NFC/assets/92375190/ec9e93b2-ad70-4d7f-9200-f95d4518dea3">
