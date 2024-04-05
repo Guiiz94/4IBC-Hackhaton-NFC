@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NFC Card Detector</title>
+</head>
+<body>
+  <h1>NFC Card Detector</h1>
+  <div id="card-info"></div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    const socket = io('http://localhost:3001');
+
+    socket.on('card_detected', (cardData) => {
+      const cardInfoDiv = document.getElementById('card-info');
+      cardInfoDiv.innerHTML = `
+        <p>Card Type: ${cardData.type}</p>
+        <p>Standard: ${cardData.standard}</p>
+        <p>UID: ${cardData.uid}</p>
+        <p>Data: ${cardData.data}</p>
+      `;
+    });
+  </script>
+</body>
+</html>
