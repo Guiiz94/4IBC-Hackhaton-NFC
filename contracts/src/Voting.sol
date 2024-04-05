@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+// Importez les contrats nécessaires depuis OpenZeppelin
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
@@ -14,16 +15,25 @@ contract Voting is Ownable, ReentrancyGuard, Pausable {
     string public voteName;
     Option[] public options;
     mapping(string => uint) private optionIndex;
+    mapping(bytes32 => bool) private whitelistedNFCs;
     bool public votingClosedPermanently = false;
 
+    // Événements
     event OptionAdded(string optionName);
-    event VoteCast(string optionName);
+    event VoteCast(string optionName, string nfcID);
 
-    constructor(string memory _voteName) Ownable(msg.sender) {
+    // Constructor
+    constructor(string memory _voteName) Ownable() {
         voteName = _voteName;
     }
 
-    function addOption(string memory _optionName) public nonReentrant onlyOwner whenNotPaused {
+    function addToWhitelist(string[] memory nfcIDs) public onlyOwner {
+        for (uint i = 0; i < nfcIDs.length; i++) {
+            whitelistedNFCs[keccak256(abi.encodePacked(nfcIDs[i]))] = true;
+        }
+    }
+
+    function addOption(string memory _optionName) public nonReentrant onlyOwner whenNotPaused{
         require(optionIndex[_optionName] == 0, "Option already exists");
         require(!votingClosedPermanently, "Voting has been closed permanently");
 
@@ -33,16 +43,17 @@ contract Voting is Ownable, ReentrancyGuard, Pausable {
         emit OptionAdded(_optionName);
     }
 
-    function castVote(string memory _optionName) public nonReentrant whenNotPaused {
+    function castVote(string memory _optionName, string memory nfcID) public nonReentrant whenNotPaused {
         require(!votingClosedPermanently, "Voting has been closed permanently");
+        require(whitelistedNFCs[keccak256(abi.encodePacked(nfcID))], "NFC ID not whitelisted");
         uint index = optionIndex[_optionName];
         require(index != 0, "Option does not exist");
         
         options[index - 1].voteCount += 1;
 
-        emit VoteCast(_optionName);
+        emit VoteCast(_optionName, nfcID);
     }
-
+    
     function getOptions() public view returns (string[] memory names, uint[] memory voteCounts) {
         require(!votingClosedPermanently, "Voting has been closed permanently");
 
