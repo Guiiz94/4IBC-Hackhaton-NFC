@@ -23,7 +23,7 @@ contract Voting is Ownable, ReentrancyGuard, Pausable {
     event VoteCast(string optionName, string nfcID);
 
     // Constructor
-    constructor(string memory _voteName) Ownable() {
+    constructor(string memory _voteName) Ownable(msg.sender) {
         voteName = _voteName;
     }
 

@@ -8,7 +8,7 @@ contract DeployVotingFactoryScript is Script {
     function run() external {
         vm.startBroadcast();
 
-        VotingFactory votingFactory = new VotingFactory();
+        new VotingFactory();
 
         vm.stopBroadcast();
     }
