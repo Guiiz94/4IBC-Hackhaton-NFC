@@ -1,17 +1,34 @@
-import express, { json } from 'express';
-import { NFC } from 'nfc-pcsc';
+import express from "express";
+import { Server } from "socket.io";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+import { NFC } from "nfc-pcsc";
 
 const app = express();
+const server = app.listen(3001, () => {
+  console.log("Server started on port 3001");
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
 const nfc = new NFC();
 
-app.use(json());
+const __dirname = dirname(fileURLToPath(import.meta.url));
+console.log(__dirname);
 
-const scannedCards = [];
+app.get("/", (req, res) => {
+  res.sendFile(join(__dirname, "index.html"));
+});
 
-nfc.on('reader', reader => {
+nfc.on("reader", (reader) => {
   console.log(`${reader.reader.name} device attached`);
 
-  reader.on('card', card => {
+  reader.on("card", (card) => {
     const cardData = {
       type: card.type,
       standard: card.standard,
@@ -19,32 +36,31 @@ nfc.on('reader', reader => {
       data: card.data || null,
     };
 
-    scannedCards.push(cardData);
     console.log(`${reader.reader.name} card detected`, cardData);
+    io.emit("card_detected", cardData);
   });
 
-  reader.on('card.off', card => {
+  reader.on("card.off", (card) => {
     console.log(`${reader.reader.name} card removed`, card);
   });
 
-  reader.on('error', err => {
-    console.log(`${reader.reader.name} an error occurred`, err);
+  reader.on("error", (err) => {
+    console.error(`${reader.reader.name} an error occurred`, err);
   });
 
-  reader.on('end', () => {
+  reader.on("end", () => {
     console.log(`${reader.reader.name} device removed`);
   });
 });
 
-nfc.on('error', err => {
-  console.log('an error occurred', err);
+nfc.on("error", (err) => {
+  console.error("an error occurred", err);
 });
 
-app.get('/scanned-cards', (req, res) => {
-  res.json(scannedCards);
-});
+io.on("connection", (socket) => {
+  console.log("A user connected");
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
+  });
 });

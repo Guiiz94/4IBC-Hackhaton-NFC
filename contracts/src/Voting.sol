@@ -65,7 +65,7 @@ contract Voting is Ownable, ReentrancyGuard, Pausable {
             voteCounts[i] = options[i].voteCount;
         }
     }
-
+ 
     function pause() public nonReentrant onlyOwner {
         require(!votingClosedPermanently, "Voting has been closed permanently");
         _pause();

@@ -31,7 +31,7 @@ contract VotingTest is Test {
         voting.addToWhitelist(nfcIDs);
         voting.addOption("Option 1");
         voting.castVote("Option 1", nfcIDs[0]);
-
+ 
         (, uint[] memory voteCounts) = voting.getOptions();
         assertEq(voteCounts[0], 1);
     }
