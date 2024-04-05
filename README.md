@@ -72,6 +72,13 @@ Le système nécessite le déploiement des contrats intelligents sur la blockcha
 
 ## Conclusion
 
-Ce système de vote blockchain offre une solution sécurisée, transparente et accessible pour la conduite d'élections et d'autres formes de vote. En combinant ReactJS, Solidity, et la technologie NFC, il fournit une méthode de vote moderne qui peut renforcer la confiance dans le processus électoral.
+Ce système de vote blockchain offre une solution sécurisée, transparente et accessible pour la conduite d'élections et d'autres formes de vote. En combinant ReactJS, Solidity et la technologie NFC, il fournit une méthode de vote moderne qui peut renforcer la confiance dans le processus électoral. Chaque nouveau vote déclenche le déploiement d'un nouveau contrat intelligent, garantissant l'intégrité du processus à chaque étape.
 
-<img width="2399" alt="Hackathon" src="https://github.com/Guiiz94/4IBC-Hackhaton-NFC/assets/92375190/ec9e93b2-ad70-4d7f-9200-f95d4518dea3">
+
+# Schémas :
+
+## Fonctionnalités
+<img width="2328" alt="utils" src="https://github.com/Guiiz94/4IBC-Hackhaton-NFC/assets/92375190/5662c6a5-2795-4abc-94b6-07eb4315f3e2">
+
+## Utilisation
+<img width="840" alt="function" src="https://github.com/Guiiz94/4IBC-Hackhaton-NFC/assets/92375190/43196c33-6afe-45f3-8f08-cad80e92965a">
