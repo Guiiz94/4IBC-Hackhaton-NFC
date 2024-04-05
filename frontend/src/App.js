@@ -44,17 +44,17 @@ function App() {
   
     const handleAccountsChanged = (accounts) => {
       if (accounts.length === 0) {
-        // L'utilisateur s'est déconnecté, réinitialiser l'état du compte et rediriger
+        
         setAccount('');
       } else {
         setAccount(accounts[0]);
       }
     };
   
-    // Ajoutez l'écouteur pour l'événement accountsChanged
+    
     ethereum.on('accountsChanged', handleAccountsChanged);
   
-    // Retirez l'écouteur lorsque le composant est démonté
+    
     return () => ethereum.removeListener('accountsChanged', handleAccountsChanged);
   }, []);
   
